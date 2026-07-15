@@ -8,14 +8,17 @@ from app.api.routes import router
 
 load_dotenv()
 
-frontend_url = os.getenv(
-    "FRONTEND_URL",
-    "http://localhost:5173",
-)
+frontend_url = os.getenv("FRONTEND_URL")
+
 allowed_origins = [
     "http://localhost:5173",
-    frontend_url,
+    "http://127.0.0.1:5173",
 ]
+
+if frontend_url:
+    allowed_origins.append(frontend_url.rstrip("/"))
+    
+print("Allowed CORS origins:", allowed_origins)    
 app = FastAPI(
     title="AI Email Rewriter API",
     version="1.0.0",
